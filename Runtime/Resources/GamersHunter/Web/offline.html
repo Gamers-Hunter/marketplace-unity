@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 viewport-fit=cover">
+
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+		html {
+			height: 100%;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: "Poppins", sans-serif;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		body {
+			color: #000;
+			background: #F5F4F6;
+			overflow-x: hidden;
+			margin: 0;
+
+			background-color: #fff;
+			background-image: {{%bodyBackgroundImage}};
+			background-repeat: no-repeat;
+			height: 100vh;
+			background-size: 100% calc(100% + {{navbarHeight}}px);
+		}
+
+		.close-offline {
+			height: 50px;
+			width: 50px;
+
+			margin: 11px 11px;
+
+			border-radius: 20px !important;
+			line-height: 20px;
+
+			text-align: center;
+			display: block;
+
+			color: #0d6efd;
+			text-decoration: none;
+		}
+
+		.close-offline:active {
+			background: gray
+		}
+
+		.locale-offline {
+			width: 50px;
+			height: 44px;
+			padding: 7px 14px;
+			margin-top: 17px;
+			margin-right: 17px;
+		}
+
+		.centerer {
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+		}
+
+		.close-offline svg {
+			display: inline-block;
+			vertical-align: middle;
+
+			margin: 0 auto;
+
+			text-decoration: none;
+		}
+
+		.navbar-offline {
+			width: 100%;
+
+			height: calc({{navbarHeight}}px + {{notchSizeY}}px);
+			background-color: #fff;
+
+			padding-top: {{notchSizeY}}px;
+			position: fixed;
+			top: 0px;
+			z-index: 900;
+			border-bottom: 1px solid rgb(204, 204, 204);
+
+			display: flex;
+			justify-content: center;
+			text-align: left;
+		}
+
+		.coins-offline {
+			padding: 10px;
+			margin: 0 auto;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.coins-ul {
+			flex-direction: row;
+			border-radius: 0.25rem;
+			display: flex;
+			margin-bottom: 0;
+			padding-left: 0;
+			list-style: none;
+		}
+
+		.coins-li {
+			border-bottom-left-radius: 0;
+			border-top-right-radius: 0.25rem;
+			border: none;
+			padding: 0.5rem 0.75rem !important;
+			background-color: #fff;
+			color: #212529;
+			display: block;
+			border: none;
+			padding: 0.5rem 0.75rem !important;
+		}
+
+		.btn-coins {
+			border: none;
+			border-radius: 15px !important;
+			font-weight: bolder;
+			margin-left: -15px;
+			padding: 10px 20px;
+			white-space: nowrap;
+			color: #212529;
+			display: inline-block;
+			font-size: .9rem;
+			line-height: 1.6;
+			text-align: center;
+			text-decoration: none;
+			user-select: none;
+			vertical-align: middle;
+			-webkit-user-drag: none;
+			-webkit-appearance: button;
+			text-transform: none;
+			background-color: #ecf0f2;
+		}
+
+		.coins-img {
+			height: 20px;
+			margin-bottom: 0.25rem !important;
+			vertical-align: middle;
+		}
+
+		.coins-span {
+			margin-left: 5px;
+		}
+
+		.loader-offline {
+			border: 12px solid #ecf0f2;
+			border-radius: 50%;
+			border-top: 12px solid rgb(252, 116, 64);
+			width: 70px;
+			height: 70px;
+			animation: spin 1s linear infinite;
+
+			position: absolute;
+			z-index: 400;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+		}
+
+		@keyframes spin {
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.container {
+			display: grid;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.welcome {
+			text-align: center;
+
+			padding-top: calc(90px + {{notchSizeY}}px);
+		}
+
+		.welcome span {
+			font-size: 14px;
+			letter-spacing: 5px;
+		}
+
+		.welcome h2 {
+			font-size: 28px;
+			font-weight: bolder;
+			margin-top: 10px;
+			line-height: 1.2;
+			margin-bottom: 0.5rem;
+		}
+
+		.coming-soon {
+			color: rgb(252, 116, 64);
+			font-size: 28px;
+			font-weight: bolder;
+			margin-bottom: 0.5rem;
+		}
+
+		.container-controls {
+			margin: 0px auto;
+			width: 300px;
+			min-height: 140px;
+			max-height: 360px;
+			display: grid;
+			grid-template-columns: 140px 140px;
+			grid-row: auto auto;
+			grid-column-gap: 20px;
+			grid-row-gap: 20px;
+		}
+
+		.container-flags {
+			margin: 0px auto;
+			width: 300px;
+			min-height: 140px;
+			max-height: 360px;
+			display: grid;
+			grid-template-columns: 140px 140px;
+			grid-row: auto auto;
+			grid-column-gap: 20px;
+			grid-row-gap: 20px;
+		}
+
+		.box {
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 40px;
+			font-family: sans-serif;
+			max-height: 140px;
+		}
+
+		.box:last-child:nth-child(odd) {
+			grid-column: span 2;
+		}
+
+		.box-flag-title {
+			grid-column: span 2;
+			text-align: center;
+		}
+
+		.box-age {
+			grid-column: span 2;
+			text-align: center;
+		}
+
+		.hidden {
+			visibility: hidden;
+			opacity: 0;
+			transition: visibility 0s 0.3s, opacity 0.3s linear;
+		}
+
+		.visible {
+			visibility: visible;
+			opacity: 1;
+			transition: opacity 0.3s linear;
+		}
+
+		.card-input-element {
+			display: none;
+		}
+
+		.card-input-element:checked+.card-input {
+			box-shadow: 0 0 5px 5px rgb(252, 116, 64);
+		}
+
+		.card-input {
+			border-radius: 10px;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 40px;
+			font-family: sans-serif;
+		}
+
+		.card-input:hover {
+			cursor: pointer;
+		}
+
+		select {
+			outline: none;
+			background: #fc7440;
+			border: none;
+			border-radius: 10px;
+			color: #fff;
+			font-size: 1.1rem;
+			font-weight: 700;
+			overflow: hidden;
+			position: relative;
+			white-space: nowrap;
+			appearance: none;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			text-align: center;
+			line-height: 1.6;
+		}
+
+		.form-select {
+			padding: 10px 30px;
+		}
+
+		.box-legal {
+			padding-top: 40px;
+			padding-bottom: 100px;
+			grid-column: span 2;
+			grid-row: span 2;
+			text-align: center;
+		}
+
+		.setup-link {
+			text-decoration: none;
+			color: #000;
+		}
+
+		.country-img {
+			width: 140px;
+			height: auto;
+		}
+
+
+		.legal-container {
+			display: block;
+			height: 100%;
+		}
+
+		.legal-iframe {
+			padding: 0;
+
+			padding-top: calc({{navbarHeight}}px + {{notchSizeY}}px);
+			height: 100%;
+			margin: 0;
+			width: 100%;
+			border: none;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<div class="navbar-offline">
+			<a href="{{webPath}}#backclose" class="close-offline" onclick="return clickedClose();">
+				<span class="centerer"></span>
+				{{%backSvg}}
+			</a>
+
+			<div class="coins-offline">
+				<ul class="coins-ul">
+					<li class="coins-li">
+						<button class="btn-coins">
+							{{%hcImg}}
+							<span class="coins-span">{{coins}}
+								HC</span>
+						</button>
+					</li>
+				</ul>
+			</div>
+
+			<div id="localeDiv" class="hidden">
+				<select class="locale-offline" name="locale" id="localeSelect" onchange="translateDocument();">
+					<option {{enSelected}} value="en">en</option>
+					<option {{esSelected}} value="es">es</option>
+					<option {{ptSelected}} value="pt">pt</option>
+				</select>
+			</div>
+		</div>
+	</header>
+
+	<div id="loader" class="loader-offline"></div>
+
+	<div id="setupDiv" class="container hidden">
+		<div class="welcome">
+			<span class="span-text" translate="welcome"></span>
+			<h2 class="principal-title" translate="description"></h2>
+			<label translate="selectCountry"></label>
+
+			{{comingSoon?@comingSoon:empty}}
+		</div>
+
+		<div class="container-controls">
+			<div class="container-flags">
+				{{availableCountriesUs?@flagboxUS:empty}}
+				{{availableCountriesMx?@flagboxMX:empty}}
+				{{availableCountriesCa?@flagboxCA:empty}}
+				{{availableCountriesBr?@flagboxBR:empty}}
+			</div>
+
+			<div class="box-age">
+				<select class="form-select" name="age" id="ageSelect" onchange="validateSetupForm(this);">
+					<option selected value="" translate="confirmAge"></option>
+					<option value="0" translate="ageNotListed"></option>
+					<option value="1000" translate="legalAge"></option>
+				</select>
+			</div>
+			<div class="box-legal">
+				<p>
+					<a class="setup-link" onclick="clickPrivacy(true);" translate="privacy"></a>
+					<br><br>
+					{{companyName?@companyLink:empty}}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div id="privacy" class="legal-container" style="display: none;">
+		{{setupIncomplete?@privacyFrame:empty}}
+	</div>
+
+	<style>
+		.modal {
+			padding-top: 200px;
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0, 0, 0);
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+
+		.modal-content {
+			background-color: #fefefe;
+			margin: 15% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+		}
+
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+	</style>
+
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<p id="modalParagraph"></p>
+		</div>
+	</div>
+
+	<script>
+		const translateElements = document.querySelectorAll('[translate]');
+		let localeSelect = document.getElementById('localeSelect');
+		let strings = {{jsonStrings}};
+		let countryLanguages = {{jsonCountryLanguages}};
+		let locale = localeSelect.value;
+
+		let translateDocument = function (localeParam) {
+			locale = localeParam || localeSelect.value;
+			for (let element of translateElements) {
+				let stringId = element.getAttribute('translate');
+				element.innerHTML = strings[locale][stringId];
+			}
+		}
+
+		translateDocument();
+
+		const radioInputs = document.querySelectorAll('input[type="radio"][name="countries"]');
+		for (let input of radioInputs) {
+			input.addEventListener('change', function (event) {
+				let country = event.target.value;
+				let countryLocale = countryLanguages[country];
+				if (countryLocale) {
+					localeSelect.value = countryLocale;
+					translateDocument(countryLocale);
+				}
+			});
+		}
+
+		var contentHeight = document.body.scrollHeight + {{navbarHeight}};
+		document.body.style.backgroundSize = "100% " + contentHeight + "px";
+	</script>
+
+	<script>
+		window.localStorage.removeItem("setupComplete");
+
+		var ageSelect = document.getElementById('ageSelect');
+		var localeDiv = document.getElementById('localeDiv');
+		var comingSoon = document.getElementById('comingSoon');
+		var setupDiv = document.getElementById('setupDiv');
+		var loader = document.getElementById('loader');
+		var modalParagraph = document.getElementById('modalParagraph');
+		var privacyDiv = document.getElementById('privacy');
+
+		let setupComplete = {{setupComplete}};
+
+		if (window.location.hash) {
+			var hash = window.location.hash.substring(1);
+			if (hash.includes("setupcomplete")) {
+				setupComplete = true;
+			}
+		}
+
+		if (!setupComplete) {
+			setTimeout(function () {
+				loader.classList.add("hidden");
+				setupDiv.classList.remove("hidden");
+				setupDiv.classList.add("visible");
+				localeDiv.classList.remove("hidden");
+				localeDiv.classList.add("visible");
+			}, 300);
+		}
+
+		let centerItem = function (item) {
+			// Get the dimensions of the item
+			var itemWidth = item.offsetWidth;
+			var itemHeight = item.offsetHeight;
+
+			// Calculate the center position of the screen
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			var centerX = screenWidth / 2;
+			var centerY = screenHeight / 2;
+
+			// Get the height of the header
+			var headerHeight = document.querySelector('header').offsetHeight;
+
+			// Calculate the position of the item to center it
+			var itemLeft = centerX - (itemWidth / 2);
+			var itemTop = centerY - (itemHeight / 2) - (headerHeight / 2);
+
+			// Scroll the window to center the item
+			window.scrollTo(itemLeft, itemTop);
+		}
+
+		let validateSetupForm = function (element) {
+			let scrollTo = element.getAttribute('scrollTo');
+			if (scrollTo) {
+				centerItem(element);
+			}
+
+			let countryInput = document.querySelector('input[name="countries"]:checked');
+			let country = countryInput ? countryInput.value : false;
+			if (!country) {
+				return false;
+			}
+
+			if (comingSoon != null) {
+				comingSoon.remove();
+				comingSoon = null;
+			}
+
+			let showAgeModal = ageSelect.value == "0";
+			let legalAge = parseInt(ageSelect.value) || 0;
+
+			if (showAgeModal) {
+				var modal = document.getElementById("modal");
+				modal.style.display = "block";
+				modalParagraph.innerHTML = strings[locale]["restrictedAge"];
+				return false;
+			}
+
+			if (legalAge > 0) {
+				setupDiv.classList.remove("visible");
+				setupDiv.classList.add("hidden");
+
+				localeDiv.classList.remove("visible");
+				localeDiv.classList.add("hidden");
+
+				loader.classList.remove("hidden");
+				loader.classList.add("visible");
+
+				setupComplete = true;
+
+				setTimeout(function () {
+					location.href = "{{webPath}}#setupcomplete-age" + legalAge + "-country" + country + "-language" + locale;
+				}, 800);
+
+				return true;
+			}
+
+			return false;
+		}
+
+		let showingPrivacy = false;
+		let clickPrivacy = function (hunter) {
+			var privacyFrame = document.getElementById('privacy-frame');
+
+			setupDiv.style.display = "none";
+			loader.style.display = "none";
+			privacyDiv.style.display = "block";
+
+			if (hunter) {
+				privacyFrame.src = "{{hunterPrivacyUrl}}";
+			} else {
+				privacyFrame.src = "{{companyPrivacyUrl}}";
+			}
+			showingPrivacy = true;
+		}
+
+		let clickedClose = function () {
+			if (showingPrivacy) {
+				showingPrivacy = false;
+
+				privacyDiv.style.display = "none";
+				setupDiv.style.display = "grid";
+				loader.style.display = "block";
+
+				return false;
+			}
+
+			return true;
+		}
+	</script>
+
+	<script>
+		var modal = document.getElementById("modal");
+		var span = document.getElementsByClassName("close")[0];
+
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+	</script>
+</body>
+
+</html>
