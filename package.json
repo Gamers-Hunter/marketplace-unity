@@ -1,0 +1,26 @@
+{
+	"name": "com.gamershunter.sdk",
+	"version": "1.0.0",
+	"displayName": "GamersHunter SDK",
+	"description": "The Gamers Hunter SDK - Monetize your game with the GamersHunter Marketplace",
+	"unity": "2019.1",
+	"unityRelease": "0b5",
+	"documentationUrl": "https://gamershunter.com/developer/docs/plugins/",
+	"changelogUrl": "https://gamershunter.com/developer/docs/plugins/",
+	"licensesUrl": "https://gamershunter.com/developer/docs/plugins/",
+	"dependencies": {
+		"com.unity.nuget.newtonsoft-json": "3.1.0"
+	},
+   "keywords": [
+	  "monetization",
+	  "rewards",
+	  "marketplace",
+	  "analytics"
+	],
+	"author": {
+	  "name": "Gamers Hunter",
+	  "email": "hi@gamershunter.com",
+	  "url": "https://gamershunter.com/"
+	}
+  }
+  
