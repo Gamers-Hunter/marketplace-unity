@@ -29,3 +29,15 @@
     - [Newtonsoft Json 13.0.2](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@3.1/manual/index.html)
   - Built in plugins:
     - [Gree WebView](https://github.com/gree/unity-webview)
+
+# 1.1.0
+- Developed and tested with Unity 2022.3.4f1
+  - Fixes andorid burst errors
+- Updated MarketButton component
+  - Added Coin size, time and spread options
+  - Added optional coin sprite
+- Updated transition to dynamic target
+  - Added scaledown transition to coins
+- Marketplace
+  - Added partner checkout support
+  - Removed setup texture

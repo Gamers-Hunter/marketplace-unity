@@ -3,8 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport"
-		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 viewport-fit=cover">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
 
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
@@ -31,7 +30,6 @@
 			margin: 0;
 
 			background-color: #fff;
-			background-image: {{%bodyBackgroundImage}};
 			background-repeat: no-repeat;
 			height: 100vh;
 			background-size: 100% calc(100% + {{navbarHeight}}px);
@@ -82,11 +80,7 @@
 
 		.navbar-offline {
 			width: 100%;
-
-			height: calc({{navbarHeight}}px + {{notchSizeY}}px);
 			background-color: #fff;
-
-			padding-top: {{notchSizeY}}px;
 			position: fixed;
 			top: 0px;
 			z-index: 900;
@@ -166,7 +160,7 @@
 			height: 70px;
 			animation: spin 1s linear infinite;
 
-			position: absolute;
+			position: fixed;
 			z-index: 400;
 			top: 0;
 			bottom: 0;
@@ -189,8 +183,6 @@
 
 		.welcome {
 			text-align: center;
-
-			padding-top: calc(90px + {{notchSizeY}}px);
 		}
 
 		.welcome span {
@@ -249,11 +241,6 @@
 
 		.box:last-child:nth-child(odd) {
 			grid-column: span 2;
-		}
-
-		.box-flag-title {
-			grid-column: span 2;
-			text-align: center;
 		}
 
 		.box-age {
@@ -344,7 +331,6 @@
 		.legal-iframe {
 			padding: 0;
 
-			padding-top: calc({{navbarHeight}}px + {{notchSizeY}}px);
 			height: 100%;
 			margin: 0;
 			width: 100%;
@@ -423,6 +409,24 @@
 		{{setupIncomplete?@privacyFrame:empty}}
 	</div>
 
+	<script>
+		var notchY = {{notchSizeY}};
+		var navbarHeight = {{navbarHeight}};
+
+		var devicePixelRatio = window.devicePixelRatio || 1;
+		notchY = notchY / devicePixelRatio;
+
+		var navbarOffline = document.querySelector('.navbar-offline');
+		navbarOffline.style.height = "calc(" + navbarHeight + "px + " + notchY + "px)";
+		navbarOffline.style.paddingTop = notchY + "px";
+
+		var legalIframe = document.querySelector('.legal-iframe');
+		legalIframe.style.paddingTop = "calc(" + navbarHeight + "px + " + notchY + "px)";
+
+		var welcome = document.querySelector('.welcome');
+		welcome.style.paddingTop = "calc(90px + " + notchY + "px)";
+	</script>
+
 	<style>
 		.modal {
 			padding-top: 200px;
@@ -469,27 +473,27 @@
 	</div>
 
 	<script>
-		const translateElements = document.querySelectorAll('[translate]');
-		let localeSelect = document.getElementById('localeSelect');
-		let strings = {{jsonStrings}};
-		let countryLanguages = {{jsonCountryLanguages}};
-		let locale = localeSelect.value;
+		var translateElements = document.querySelectorAll('[translate]');
+		var localeSelect = document.getElementById('localeSelect');
+		var strings = {{jsonStrings}};
+		var countryLanguages = {{jsonCountryLanguages}};
+		var locale = localeSelect.value;
 
-		let translateDocument = function (localeParam) {
+		var translateDocument = function (localeParam) {
 			locale = localeParam || localeSelect.value;
-			for (let element of translateElements) {
-				let stringId = element.getAttribute('translate');
+			for (var element of translateElements) {
+				var stringId = element.getAttribute('translate');
 				element.innerHTML = strings[locale][stringId];
 			}
 		}
 
 		translateDocument();
 
-		const radioInputs = document.querySelectorAll('input[type="radio"][name="countries"]');
-		for (let input of radioInputs) {
+		var radioInputs = document.querySelectorAll('input[type="radio"][name="countries"]');
+		for (var input of radioInputs) {
 			input.addEventListener('change', function (event) {
-				let country = event.target.value;
-				let countryLocale = countryLanguages[country];
+				var country = event.target.value;
+				var countryLocale = countryLanguages[country];
 				if (countryLocale) {
 					localeSelect.value = countryLocale;
 					translateDocument(countryLocale);
@@ -504,6 +508,16 @@
 	<script>
 		window.localStorage.removeItem("setupComplete");
 
+		// Marketplace mock with setCoins function
+		var gh = {
+			marketplace: {
+				setCoins: function (coins) {
+					var coinsSpan = document.querySelector('.coins-span');
+					coinsSpan.innerHTML = coins + " HC";
+				}
+			}
+		};
+
 		var ageSelect = document.getElementById('ageSelect');
 		var localeDiv = document.getElementById('localeDiv');
 		var comingSoon = document.getElementById('comingSoon');
@@ -512,7 +526,7 @@
 		var modalParagraph = document.getElementById('modalParagraph');
 		var privacyDiv = document.getElementById('privacy');
 
-		let setupComplete = {{setupComplete}};
+		var setupComplete = {{setupComplete}};
 
 		if (window.location.hash) {
 			var hash = window.location.hash.substring(1);
@@ -531,7 +545,7 @@
 			}, 300);
 		}
 
-		let centerItem = function (item) {
+		var centerItem = function (item) {
 			// Get the dimensions of the item
 			var itemWidth = item.offsetWidth;
 			var itemHeight = item.offsetHeight;
@@ -553,14 +567,14 @@
 			window.scrollTo(itemLeft, itemTop);
 		}
 
-		let validateSetupForm = function (element) {
-			let scrollTo = element.getAttribute('scrollTo');
+		var validateSetupForm = function (element) {
+			var scrollTo = element.getAttribute('scrollTo');
 			if (scrollTo) {
 				centerItem(element);
 			}
 
-			let countryInput = document.querySelector('input[name="countries"]:checked');
-			let country = countryInput ? countryInput.value : false;
+			var countryInput = document.querySelector('input[name="countries"]:checked');
+			var country = countryInput ? countryInput.value : false;
 			if (!country) {
 				return false;
 			}
@@ -570,8 +584,8 @@
 				comingSoon = null;
 			}
 
-			let showAgeModal = ageSelect.value == "0";
-			let legalAge = parseInt(ageSelect.value) || 0;
+			var showAgeModal = ageSelect.value == "0";
+			var legalAge = parseInt(ageSelect.value) || 0;
 
 			if (showAgeModal) {
 				var modal = document.getElementById("modal");
@@ -602,8 +616,8 @@
 			return false;
 		}
 
-		let showingPrivacy = false;
-		let clickPrivacy = function (hunter) {
+		var showingPrivacy = false;
+		var clickPrivacy = function (hunter) {
 			var privacyFrame = document.getElementById('privacy-frame');
 
 			setupDiv.style.display = "none";
@@ -618,7 +632,7 @@
 			showingPrivacy = true;
 		}
 
-		let clickedClose = function () {
+		var clickedClose = function () {
 			if (showingPrivacy) {
 				showingPrivacy = false;
 

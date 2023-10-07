@@ -1,8 +1,8 @@
 {
 	"name": "com.gamershunter.sdk",
-	"version": "1.0.0",
-	"displayName": "GamersHunter SDK",
-	"description": "The Gamers Hunter SDK - Monetize your game with the GamersHunter Marketplace",
+	"version": "1.1.0",
+	"displayName": "GamersHunter Marketplace SDK",
+	"description": "Welcome to the GamesHunter Marketplace: Where Innovation Meets Monetization! Connect merchants and gamers seamlessly. Real-life products, exclusive discounts based on engagement time. Game developers earn commissions per sale, all without intruding on the gaming experience. Level up your monetization game!",
 	"unity": "2019.1",
 	"unityRelease": "0b5",
 	"documentationUrl": "https://gamershunter.com/developer/docs/plugins/",
@@ -13,6 +13,8 @@
 	},
    "keywords": [
 	  "monetization",
+	  "engagement",
+	  "commissions",
 	  "rewards",
 	  "marketplace",
 	  "analytics"

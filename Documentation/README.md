@@ -1,11 +1,14 @@
 # Unity GamersHunter Marketplace Package
-GamersHunter Package V1.0.0 for Unity 
+GamersHunter Package V1.1.0 for Unity
 
 -------
 # Overview
-GamersHunter Marketplace is a new way to monetize your mobile games and take the user experience to a new level, by rewarding them for doing what they already do, play their favorite game. 
+Welcome to the GamesHunter Marketplace: Where Innovation Meets Monetization! Connect merchants and gamers seamlessly. Real-life products, exclusive discounts based on engagement time. Game developers earn commissions per sale, all without intruding on the gaming experience. Level up your monetization game!
 
 Players are rewarded HunterCoins per session time played. These HunterCoins can then be exchanged for discounts on real-world products on the GamersHunter Marketplace, which is available directly wherever you place the GamersHunter Marketplace Button, without ever leaving your game!
+
+
+[![See how it works on Youtube](https://img.youtube.com/vi/tOlwsbGr3o4/default.jpg)](https://youtu.be/tOlwsbGr3o4)
 
 <img style="max-width: 100%; max-height: 400px;" src="./unity_v1_mockup.png">
 <img style="max-width: 100%; max-height: 400px;" src="./unity_v1_marketplace_front.png">
@@ -79,14 +82,18 @@ For deep links, you can learn more about [setting up a URL Scheme for Android in
 We have created a small AndroidManifest.xml file as a guide with the needed attributes for everything to work in the Deep Linking section, this manifest contains in short:
  * *activity* attribute `android:hardwareAccelerated="true"` for the Marketplace webview to run smoothly.
  * *activity* attribute `android:exported="true"` to assure your app can use deep links.
+ * *activity* attribute `android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode"` to avoid OS from restating app on user login
+ * *activity* attribute `tools:ignore="LockedOrientationActivity"` to avoid OS from restating app
  * *application* attribute `android:usesCleartextTraffic="true"` to open the Marketplace setup webview local files.
  * Deep linking *intent-filter* update `android:scheme="myawesomegame"` with your own URL Scheme.
+ * Meta Data *unityplayer.UnityActivity* set to true inside activity to avoid OS from restating app
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
   <application android:usesCleartextTraffic="true">
-    <activity android:name="com.unity3d.player.UnityPlayerActivity" android:theme="@style/UnityThemeSelector" android:hardwareAccelerated="true" android:exported="true">
+    <activity android:name="com.unity3d.player.UnityPlayerActivity" android:theme="@style/UnityThemeSelector" android:hardwareAccelerated="true" android:exported="true" android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|uiMode" tools:ignore="LockedOrientationActivity">
+      <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -113,6 +120,9 @@ We have created a small AndroidManifest.xml file as a guide with the needed attr
 -------
 # Workflows
 ### Installing the package
+
+[![Watch on Youtube](https://img.youtube.com/vi/sTn-AyxDzMQ/default.jpg)](https://youtu.be/sTn-AyxDzMQ)
+
 We will be installing the GamersHunter SDK Unity Package with the official GamersHunter Git package repository. Launch your project and open Unity Package manager (Window>Package Manager)
 
 <img style="max-width: 100%; max-height: 400px;" src="./unity_v1_pm_open.jpg">
@@ -121,7 +131,7 @@ Click on the plus sign and select *add package from git URL...*
 
 <img style="max-width: 100%; max-height: 400px;" src="./unity_v1_pm_git_add.jpg">
 
-in the URL text field paste the following URL: `https://github.com/Gamers-Hunter/marketplace-unity.git#V1.0.0`
+in the URL text field paste the following URL: `https://github.com/Gamers-Hunter/marketplace-unity.git#V1.1.0`
 
 <img style="max-width: 100%; max-height: 400px;" src="./unity_v1_pm_git_url.jpg">
 
@@ -181,6 +191,11 @@ The Button itself is placed on a *GamersHunter* *GameObject* along with a *Hunte
 In the inspector, you will be able to set a *Coins From Game Object* option. This can be set for example as your Player *GameObject*, and coins will spawn from your player once the session is stopped and the button is updated.
 
 <img style="max-width: 100%; max-height: 400px;" src="./unity_v1_button_gameobject.jpg">
+
+-------
+### Personalize the Marketplace Button HunterCoin Animation
+
+By selecting the *GamersHunter* MarketButton *GameObject* you can customize the HunterCoin size, animation time in milliseconds, and optional replacement sprite if the default does not fit your style. Note that this does not change the coin sprite inside the market, so your design must not deviate from the original style, including the GamersHunter logo.
 
 -------
 ### Adding button listeners
@@ -310,4 +325,4 @@ Marketplace view is not working on MacOS because of *WebView.bundle*?
 If you are experiencing any other problems be sure to send us an email at `hi@gamershunter.com` we will gladly check it out.
 
 ----------
-*Last updated on July 18, 2023*
+*Last updated on Oct 7, 2023*
